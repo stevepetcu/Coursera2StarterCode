@@ -1,6 +1,8 @@
 package document;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /** 
  * A naive implementation of the Document abstract class. 
@@ -8,6 +10,8 @@ import java.util.List;
  */
 public class BasicDocument extends Document 
 {
+	private String NON_SENTENCE_SEPARATOR = "[^.!?]+";
+
 	/** Create a new BasicDocument object
 	 * 
 	 * @param text The full text of the Document.
@@ -34,9 +38,7 @@ public class BasicDocument extends Document
 	@Override
 	public int getNumWords()
 	{
-		//TODO: Implement this method in week 2 according to the comments above.  
-		// See the Module 2 support videos if you need help.
-	    return 0;
+		return 0;
 	}
 	
 	/**
@@ -54,9 +56,15 @@ public class BasicDocument extends Document
 	@Override
 	public int getNumSentences()
 	{
-	    //TODO: Implement this method.  See the Module 2 support videos 
-        // if you need help.
-        return 0;
+		Pattern pattern = Pattern.compile(NON_SENTENCE_SEPARATOR);
+		Matcher matcher = pattern.matcher(getText());
+		int count = 0;
+
+		while (matcher.find()) {
+			++count;
+		}
+
+		return count;
 	}
 	
 	/**
@@ -89,7 +97,7 @@ public class BasicDocument extends Document
 	 * You are encouraged to add your own tests.  */
 	public static void main(String[] args)
 	{
-		/* Each of the test cases below uses the method testCase.  The first 
+		/* Each of the test cases below uses the method testCase.  The first
 		 * argument to testCase is a Document object, created with the string shown.
 		 * The next three arguments are the number of syllables, words and sentences 
 		 * in the string, respectively.  You can use these examples to help clarify 
