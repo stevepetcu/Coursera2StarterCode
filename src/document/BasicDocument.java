@@ -1,6 +1,5 @@
 package document;
 
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -10,7 +9,9 @@ import java.util.regex.Pattern;
  * @author UC San Diego Intermediate Programming MOOC team
  */
 public class BasicDocument extends Document {
-    private String NON_SENTENCE_SEPARATOR = "[^.!?]+";
+
+    private String WORD_MATCHER = "[a-zA-Z]+";
+    private String SENTENCE_MATCHER = "[^.!?]+";
 
     /**
      * Create a new BasicDocument object
@@ -37,7 +38,15 @@ public class BasicDocument extends Document {
      */
     @Override
     public int getNumWords() {
-        return 0;
+        Pattern pattern = Pattern.compile(WORD_MATCHER);
+        Matcher matcher = pattern.matcher(getText());
+        int count = 0;
+
+        while (matcher.find()) {
+            ++count;
+        }
+
+        return count;
     }
 
     /**
@@ -54,7 +63,7 @@ public class BasicDocument extends Document {
      */
     @Override
     public int getNumSentences() {
-        Pattern pattern = Pattern.compile(NON_SENTENCE_SEPARATOR);
+        Pattern pattern = Pattern.compile(SENTENCE_MATCHER);
         Matcher matcher = pattern.matcher(getText());
         int count = 0;
 
@@ -81,12 +90,15 @@ public class BasicDocument extends Document {
      */
     @Override
     public int getNumSyllables() {
-        //TODO: Implement this method in week 2.  See the Module 2 support videos
-        // if you need help.  And note that there is no need to use a regular
-        // expression for the syllable counting.  We recommend you implement
-        // the helper function countSyllables in Document.java using a loop,
-        // and then call it here on each word.
-        return 0;
+        Pattern pattern = Pattern.compile(WORD_MATCHER);
+        Matcher matcher = pattern.matcher(getText());
+        int count = 0;
+
+        while (matcher.find()) {
+            count += countSyllables(matcher.group());
+        }
+
+        return count;
     }
 
 
