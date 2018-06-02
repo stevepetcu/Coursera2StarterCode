@@ -77,7 +77,7 @@ public abstract class Document {
 
 	private int countSyllables(List<Character> chars, int syllableCount, boolean isVowel) {
 		int size = chars.size();
-.
+
 		if (size == 0) {
 			return syllableCount;
 		}
